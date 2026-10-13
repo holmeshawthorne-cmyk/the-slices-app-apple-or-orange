@@ -24,7 +24,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 # ---------------------------------------------------------------------------
 BASE_DIR = Path(__file__).parent
 MODEL_PATH = BASE_DIR / "model_apel_jeruk.h5"
-CONFIG_PATH = BASE_DIR / "model_config.json"
+CONFIG_PATH = BASE_DIR / "kelas_apel_jeruk.json"
 
 MAX_UPLOAD_MB = 10          # batas ukuran file unggahan
 MIN_SIDE_PX = 32            # gambar lebih kecil dari ini dianggap tidak layak
