@@ -65,12 +65,18 @@ html, body, .stApp {
 [data-testid="stToolbar"], #MainMenu, footer { visibility: hidden; }
 .block-container { max-width: 760px !important; padding-top: 1.5rem !important; }
 
-/* Teks: paksa warna gelap hangat di semua mode */
 .stApp p, .stApp span, .stApp label, .stApp small, .stApp li,
 .stApp h1, .stApp h2, .stApp h3, .stApp h4,
 [data-testid="stMarkdownContainer"], [data-testid="stCaptionContainer"] {
   color: var(--ink) !important;
+}
+.stApp p, .stApp label, .stApp small, .stApp li,
+.stApp h1, .stApp h2, .stApp h3, .stApp h4 {
   font-family: 'Fredoka', 'Segoe UI', system-ui, sans-serif !important;
+}
+/* Jaga font ikon bawaan Streamlit agar tidak berubah jadi teks */
+[data-testid="stIconMaterial"], .material-symbols-rounded, .material-icons {
+  font-family: 'Material Symbols Rounded', 'Material Icons' !important;
 }
 
 /* Buah melayang di latar belakang */
@@ -155,12 +161,14 @@ html, body, .stApp {
 [data-testid="stFileUploaderFile"] { background: #FFF6EC !important; border-radius: 14px !important; }
 [data-testid="stFileUploaderFile"] * { color: var(--ink) !important; }
 
-/* Gambar pratinjau */
+
 [data-testid="stImage"] img {
   border-radius: 20px; box-shadow: 0 8px 22px rgba(91,58,58,.18); border: 3px solid #fff;
+  max-height: 340px; width: auto; max-width: 100%; object-fit: contain;
+  display: block; margin: 0 auto;
 }
 
-/* Tombol */
+
 .stButton > button {
   width: 100%; border: none !important; border-radius: 999px !important;
   padding: .7rem 1rem !important; font-weight: 700 !important; font-size: 1rem !important;
@@ -385,8 +393,10 @@ with st.container(border=True):
 
     if input_error:
         st.error(input_error)
-    if image is not None:
-        st.image(image)
+    col_img, col_res = st.columns(2, gap="medium")
+    with col_img:
+        if image is not None:
+            st.image(image)
 
     col_predict, col_reset = st.columns([3, 2])
     with col_predict:
@@ -477,7 +487,7 @@ with st.container(border=True):
             card_cls, tag, big = css_cls[win], f"{emoji} Tebakan AI", f"{names[win]}"
             conf_line = f"Tingkat keyakinan: {win_p * 100:.1f}%"
 
-        st.markdown(
+        col_res.markdown(
             html(
                 f"""
                 <div class="result {card_cls}">
